@@ -12,7 +12,7 @@ export default function ContactSection() {
     },
     {
       city: 'فرع دمشق',
-      address: 'طريق المطار - جسر عقربا – دمشق',
+      address: 'دمشق - المزرعة – شارع الشلال',
       managers: [
         { name: 'Fouad Abd Alwahd', phone: '0997 160 041', raw: '+963997160041' }
       ]
