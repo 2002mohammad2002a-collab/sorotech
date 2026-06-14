@@ -4,7 +4,7 @@ export default function ContactSection() {
   const branches = [
     {
       city: 'فرع حلب',
-      address: 'شارع تشرين – حلب',
+      address: 'حلب – شارع القوتلي',
       managers: [
         { name: 'Ahmad Roumieh', phone: '0993 364 793', raw: '+963993364793' },
         { name: 'Omar Zaitony', phone: '0966 299 727', raw: '+963966299727' }
