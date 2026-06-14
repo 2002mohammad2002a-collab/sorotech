@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+    direction: rtl; /* توجيه عناصر الموقع للغة العربية */
+    text-align: right;
+  }
+
+  /* لمنع تداخل أرقام الهواتف والنصوص الإنجليزية */
+  .ltr-text {
+    direction: ltr !important;
+    display: inline-block;
+  }
+}
