@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import Navigation from './sections/Navigation';
 import HeroSection from './sections/HeroSection';
 import SolarCalculator from './sections/SolarCalculator';
