@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 export default function SolarDayNightAmpCalculator() {
   const [dayAmperes, setDayAmperes] = useState<number>(5);
   const [nightAmperes, setNightAmperes] = useState<number>(2);
-  const [panelWatts, setPanelWatts] = useState<number>(550);
+  
+  // 🟢 تحويل حالة الألواح إلى نصية نقية لمنع فرض الرقم 100 أثناء الكتابة والمسح
+  const [panelInput, setPanelInput] = useState<string>('550');
 
   const calculateResults = () => {
     // تحويل الأمبير إلى واط على جهد الشبكة 220 فولت للحسابات الفنية
@@ -19,10 +21,10 @@ export default function SolarDayNightAmpCalculator() {
     
     const systemVoltage = matchedInverter >= 4 ? 48 : 24;
     
-    // 🛡️ حماية الحسابات: إذا قام المستخدم بمسح الحقل (panelWatts = 0)، نعتمد 550 واط خلف الكواليس لمنع القسمة على صفر (Infinity)
-    const effectivePanelWatts = panelWatts > 0 ? panelWatts : 550;
+    // 🛡️ حماية الحسابات: إذا قام المستخدم بمسح الحقل تماماً، نعتمد 550 واط خلف الكواليس رياضياً لمنع القسمة على صفر
+    const effectivePanelWatts = panelInput === '' || Number(panelInput) <= 0 ? 550 : Number(panelInput);
 
-    // 2. حساب البطارية المقترحة (تخطي سعة 24V-100Ah غير المتوفرة)
+    // 2. حساب البطارية المقترحة
     const getSuggestedBattery = (watts: number, type: 'eco' | 'pro') => {
       if (watts <= 0) {
         return systemVoltage === 24 
@@ -47,7 +49,7 @@ export default function SolarDayNightAmpCalculator() {
     const ecoBattery = getSuggestedBattery(nightWatts, 'eco');
     const proBattery = getSuggestedBattery(nightWatts, 'pro');
 
-    // 3. حساب الألواح بناءً على القيمة الآمنة (effectivePanelWatts)
+    // 3. حساب الألواح بناءً على القيمة الآمنة خلف الكواليس
     const minPanels = Math.ceil(((dayWatts * 4.5 + ecoBattery.wh * 0.6) / 4.5) / effectivePanelWatts) || 0;
     let idealPanels = Math.ceil(((dayWatts * 4.5 + proBattery.wh * 0.9) / 4.5) / effectivePanelWatts) || 0;
     
@@ -120,39 +122,31 @@ export default function SolarDayNightAmpCalculator() {
           <span className="text-[11px] text-slate-500 mt-2 text-center">تعادل تقريباً: <strong className="text-yellow-500">{results.nightWatts} واط</strong></span>
         </div>
 
-       <div className="flex flex-col bg-slate-950 p-4 rounded-xl border border-slate-800 justify-center">
-  <label className="block text-xs font-bold text-slate-400 mb-2">☀️ استطاعة اللوح الشمسي:</label>
-  <div className="relative flex items-center">
-    <input
-      type="text"
-      inputMode="numeric"
-      // 🟢 نضمن هنا عدم طباعة 100 إجبارياً؛ إذا كانت القيمة 0 أو أقل يظهر الحقل فارغاً تماماً
-      value={panelWatts > 0 ? panelWatts.toString() : ''}
-      placeholder="550"
-      onChange={(e) => {
-        // 1. تنظيف النص المكتوب تماماً من أي رموز غير الأرقام
-        const textValue = e.target.value.replace(/[^0-9]/g, '');
-        
-        // 2. إذا أصبح الحقل فارغاً تماماً نضع القيمة 0 لتسهيل الكتابة من جديد
-        if (textValue === '') {
-          setPanelWatts(0);
-        } else {
-          // 3. تحويل النص إلى رقم نقي مباشرة دون دمج أو إضافة 100
-          const parsedNumber = parseInt(textValue, 10);
-          setPanelWatts(isNaN(parsedNumber) ? 0 : parsedNumber);
-        }
-      }}
-      // تأكيد عمل تفريغ للحقل عند النقر عليه لسهولة التعديل (إختياري وممتاز لتجربة المستخدم)
-      onFocus={(e) => {
-        if (panelWatts === 550 || panelWatts === ) {
-          setPanelWatts(0);
-        }
-      }}
-      className="w-full bg-slate-900 text-white text-xs p-2 rounded-lg border border-slate-700 outline-none focus:border-red-500 text-center font-bold"
-    />
-    <span className="absolute left-3 text-[10px] text-slate-500 pointer-events-none">W</span>
-  </div>
-</div>
+        {/* 🟢 حقل استطاعة اللوح بعد الإصلاح الجذري للمشكلة الموضحة في الفيديو */}
+        <div className="flex flex-col bg-slate-950 p-4 rounded-xl border border-slate-800 justify-center">
+          <label className="block text-xs font-bold text-slate-400 mb-2">☀️ استطاعة اللوح الشمسي:</label>
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              inputMode="numeric"
+              value={panelInput}
+              placeholder="550"
+              onChange={(e) => {
+                // تصفية المدخلات للأرقام فقط لإنهاء دمج الـ 100 تلقائياً
+                const textValue = e.target.value.replace(/[^0-9]/g, '');
+                setPanelInput(textValue);
+              }}
+              onFocus={() => {
+                // تفريغ تلقائي عند النقر إذا كان يحتوي على القيمة الافتراضية تسهيلاً للمستخدم
+                if (panelInput === '550' || panelInput === '100') {
+                  setPanelInput('');
+                }
+              }}
+              className="w-full bg-slate-900 text-white text-xs p-2 rounded-lg border border-slate-700 outline-none focus:border-red-500 text-center font-bold"
+            />
+            <span className="absolute left-3 text-[10px] text-slate-500 pointer-events-none">W</span>
+          </div>
+        </div>
 
       </div>
 
@@ -203,7 +197,7 @@ export default function SolarDayNightAmpCalculator() {
         <button 
           type="button"
           onClick={() => {
-            const currentPanelText = panelWatts === 0 ? '550' : panelWatts.toString();
+            const currentPanelText = panelInput === '' ? '550' : panelInput;
             const message = `مرحباً سوروتك، قمت بحساب أحمالي المباشرة بالأمبير عبر حاسبتكم:\n- الأحمال النهارية: ${dayAmperes}A (${results.dayWatts}W).\n- الأحمال الليلية: ${nightAmperes}A (${results.nightWatts}W).\n- استطاعة اللوح: ${currentPanelText}W.\n\nنتائج المنظومات المقترحة:\n1- الاقتصادية: عاكس ${results.inverterKw}kW، بطارية ${results.ecoBattery}، وعدد ${results.minPanels} ألواح.\n2- الاحترافية: عاكس ${results.inverterKw}kW، بطارية ${results.proBattery}، وعدد ${results.idealPanels} ألواح.`;
             window.open(`https://wa.me/963966299727?text=${encodeURIComponent(message)}`, '_blank');
           }}
