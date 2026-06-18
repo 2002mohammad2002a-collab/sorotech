@@ -1,16 +1,23 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Cpu, Zap, Sun } from 'lucide-react';
+import { Menu, X, ChevronDown, Cpu, Zap, Sun, Calculator, Gauge } from 'lucide-react';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [showProductsMenu, setShowProductsMenu] = useState(false);
+  const [showCalcMenu, setShowCalcMenu] = useState(false); // حالة برمجية للتحكم بقائمة الحاسبات
 
-  // قائمة المنتجات الفرعية مع روابط الأقسام (IDs المربوطة بملف ProductsSection)
+  // قائمة المنتجات الفرعية
   const productItems = [
     { name: 'بطاريات الليثيوم', link: '#products', icon: Cpu },
     { name: 'الإنفرترات الهجينة', link: '#products', icon: Zap },
     { name: 'الألواح الشمسية', link: '#products', icon: Sun }
+  ];
+
+  // قائمة الحاسبات الفرعية المضافة حديثاً لقائمة التنقل
+  const calculatorItems = [
+    { name: 'حاسبة الأمبير السريعة', link: '#fast-calc', icon: Gauge },
+    { name: 'حاسبة الأجهزة التفصيلية', link: '#detailed-calc', icon: Calculator }
   ];
 
   return (
@@ -40,7 +47,10 @@ export default function Navigation() {
         <button 
           onClick={() => {
             setIsOpen(!isOpen);
-            if(isOpen) setShowProductsMenu(false); // إعادة تعيين القائمة الفرعية عند الإغلاق
+            if(isOpen) {
+              setShowProductsMenu(false);
+              setShowCalcMenu(false); // إعادة تعيين الحسابات عند الإغلاق
+            }
           }} 
           className="p-2 text-zinc-900 flex items-center justify-center rounded-lg hover:bg-zinc-100 transition-colors z-[100]"
         >
@@ -69,10 +79,13 @@ export default function Navigation() {
                 الرئيسية
               </a>
 
-              {/* زر منتجاتنا التفاعلي لفتح القائمة الفرعية */}
+              {/* 1️⃣ زر منتجاتنا التفاعلي لفتح القائمة الفرعية */}
               <div className="border-b border-zinc-50 pb-2">
                 <button 
-                  onClick={() => setShowProductsMenu(!showProductsMenu)}
+                  onClick={() => {
+                    setShowProductsMenu(!showProductsMenu);
+                    setShowCalcMenu(false); // إغلاق قائمة الحاسبات إذا فتح المنتجات
+                  }}
                   className="w-full text-lg font-black text-zinc-800 hover:text-red-600 flex items-center justify-center gap-2 transition-colors focus:outline-none"
                 >
                   <span>منتجاتنا</span>
@@ -108,6 +121,57 @@ export default function Navigation() {
                             >
                               <Icon className="w-4 h-4 text-red-600 shrink-0" />
                               <span>{prod.name}</span>
+                            </a>
+                          );
+                        })}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* 2️⃣ زر الحاسبات الشمسية المضاف حديثاً */}
+              <div className="border-b border-zinc-50 pb-2">
+                <button 
+                  onClick={() => {
+                    setShowCalcMenu(!showCalcMenu);
+                    setShowProductsMenu(false); // إغلاق قائمة المنتجات إذا فتح الحاسبات
+                  }}
+                  className="w-full text-lg font-black text-zinc-800 hover:text-red-600 flex items-center justify-center gap-2 transition-colors focus:outline-none"
+                >
+                  <span>الحاسبات الشمسية</span>
+                  <motion.div
+                    animate={{ rotate: showCalcMenu ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown className="w-5 h-5 text-zinc-400" />
+                  </motion.div>
+                </button>
+
+                {/* القائمة المنسدلة الفرعية للحاسبات */}
+                <AnimatePresence>
+                  {showCalcMenu && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="bg-zinc-50 rounded-xl mt-3 overflow-hidden border border-zinc-100"
+                    >
+                      <div className="p-2 flex flex-col gap-1">
+                        {calculatorItems.map((calc) => {
+                          const Icon = calc.icon;
+                          return (
+                            <a
+                              key={calc.name}
+                              href={calc.link}
+                              onClick={() => {
+                                setIsOpen(false);
+                                setShowCalcMenu(false);
+                              }}
+                              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold text-zinc-700 hover:bg-red-50 hover:text-red-600 transition-all text-right"
+                            >
+                              <Icon className="w-4 h-4 text-red-600 shrink-0" />
+                              <span>{calc.name}</span>
                             </a>
                           );
                         })}
