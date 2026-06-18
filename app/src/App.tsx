@@ -134,7 +134,7 @@ function SolarFastCalculator() {
           type="button"
           onClick={() => {
             const message = `مرحباً سوروتك، قمت بحساب أحمالي المباشرة بالأمبير:\n- الأحمال النهارية: ${dayAmperes}A.\n- الأحمال الليلية: ${nightAmperes}A.\n\nالمنظومة المقترحة:\nعاكس ${results.inverterKw}kW، بطارية ${results.proBattery}.`;
-            window.open(`https://wa.me/963935265490?text=${encodeURIComponent(message)}`, '_blank');
+            window.open(`https://wa.me/963966299727?text=${encodeURIComponent(message)}`, '_blank');
           }}
           className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-xl transition-all text-xs active:scale-[0.98]"
         >
