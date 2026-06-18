@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navigation from './sections/Navigation';
 import HeroSection from './sections/HeroSection';
 import SolarCalculator from './sections/SolarCalculator';
+import ProductsSection from './sections/ProductsSection'; // 1️⃣ أضفنا سطر الاستيراد هنا
 import WhyChooseUsSection from './sections/WhyChooseUsSection';
 import ContactSection from './sections/ContactSection';
 import Footer from './sections/Footer';
@@ -151,7 +152,6 @@ export default function App() {
   const [showFastCalc, setShowFastCalc] = useState(false);
   const [showDetailedCalc, setShowDetailedCalc] = useState(false);
 
-  // مراقبة التغيير في رابط الصفحة (Hash) لفتح الحاسبة تلقائياً وتحريك الشاشة إليها
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
@@ -168,7 +168,6 @@ export default function App() {
       }
     };
 
-    // التشغيل عند تحميل الصفحة وعند تغيير الـ Hash
     window.addEventListener('hashchange', handleHashChange);
     handleHashChange(); 
 
@@ -186,14 +185,13 @@ export default function App() {
 
         <div className="max-w-4xl mx-auto py-10 px-4 space-y-8">
           
-          {/* 1️⃣ القسم الأول: الحاسبة السريعة بالأمبير (تمت إضافة الـ id المربوط بالقائمة العلوبة) */}
+          {/* 1️⃣ القسم الأول: الحاسبة السريعة بالأمبير */}
           <div id="fast-calc" className="bg-slate-900/10 p-6 rounded-2xl border border-slate-900/60 shadow-md scroll-mt-20">
             <div className="text-center mb-4">
               <h2 className="text-lg font-black text-red-500">⚡ حاسبة الأحمال السريعة بالأمبير</h2>
               <p className="text-xs text-slate-400 mt-1">اضغط بالأسفل لفتح حساب فوري للمنظومة بناءً على أمبير التشغيل المباشر</p>
             </div>
             
-            {/* زر فتح وإغلاق الحاسبة السريعة */}
             <div className="max-w-md mx-auto mb-4">
               <button
                 onClick={() => setShowFastCalc(!showFastCalc)}
@@ -203,7 +201,6 @@ export default function App() {
               </button>
             </div>
 
-            {/* تظهر الحاسبة السريعة عند الكبس */}
             {showFastCalc && (
               <div className="animate-fadeIn mt-6">
                 <SolarFastCalculator />
@@ -214,14 +211,13 @@ export default function App() {
           {/* 🔗 خط فاصل هندسي */}
           <hr className="border-slate-900 max-w-xl mx-auto" />
 
-          {/* 2️⃣ القسم الثاني: الحاسبة التفصيلية بالأجهزة (تمت إضافة الـ id المربوط بالقائمة العلوية) */}
+          {/* 2️⃣ القسم الثاني: الحاسبة التفصيلية بالأجهزة */}
           <div id="detailed-calc" className="bg-slate-900/10 p-6 rounded-2xl border border-slate-900/60 shadow-md scroll-mt-20">
             <div className="text-center mb-4">
               <h2 className="text-lg font-black text-white">⚡ حاسبة الأجهزة المنزلية التفصيلية</h2>
               <p className="text-xs text-slate-400 mt-1">اضغط بالأسفل لفتح جدول الأجهزة الكهربائية واختيار محتويات منزلك بالتفصيل</p>
             </div>
 
-            {/* زر فتح وإغلاق الحاسبة التفصيلية */}
             <div className="max-w-md mx-auto mb-4">
               <button
                 onClick={() => setShowDetailedCalc(!showDetailedCalc)}
@@ -231,7 +227,6 @@ export default function App() {
               </button>
             </div>
 
-            {/* تظهر الحاسبة التفصيلية عند الكبس */}
             {showDetailedCalc && (
               <div className="animate-fadeIn mt-6">
                 <SolarCalculator />
@@ -240,6 +235,9 @@ export default function App() {
           </div>
 
         </div>
+
+        {/* 2️⃣ هنا قمنا بإعادة قسم المنتجات المحذوف ليظهر بشكل صحيح وثابت */}
+        <ProductsSection />
 
         {/* بقية أقسام الصفحة الثابتة بالأسفل */}
         <WhyChooseUsSection />
