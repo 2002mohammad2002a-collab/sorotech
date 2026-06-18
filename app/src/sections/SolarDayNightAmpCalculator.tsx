@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function SolarDayNightAmpCalculator() {
   const [dayAmperes, setDayAmperes] = useState<number>(5);
