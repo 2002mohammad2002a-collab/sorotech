@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Zap, Cpu, Sun, Layers, AlertCircle, X, CheckCircle } from 'lucide-react';
+import { ShieldCheck, Zap, Cpu, Sun, AlertCircle, X, CheckCircle } from 'lucide-react';
 
 interface TechSpecTable {
   columns: string[];
@@ -19,7 +19,8 @@ interface Product {
 }
 
 export default function ProductsSection() {
-  const [activeTab, setActiveTab] = useState<'all' | 'battery' | 'inverter' | 'solar'>('all');
+  // تم تغيير القيمة الابتدائية إلى 'battery' وإزالة خيار 'all'
+  const [activeTab, setActiveTab] = useState<'battery' | 'inverter' | 'solar'>('battery');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const products: Product[] = [
@@ -34,7 +35,7 @@ export default function ProductsSection() {
         'نظام إدارة البطارية الذكي والمتقدم جداً JK Active Balance BMS',
         'عمر افتراضي استثنائي يصل إلى 8000 دورة شحن عند تفريغ 80%'
       ],
-      image: 'Group 11.jpg', // تم ربط صورة Tanker
+      image: 'Group 11.jpg',
       techTable: {
         columns: ['الخاصية الفنية', 'TANKER 15KWh', 'TANKER 30KWh'],
         rows: [
@@ -67,7 +68,7 @@ export default function ProductsSection() {
         'تيار شحن وتفريغ مستمر عالي يصل حتى 150 أمبير متوافق مع العواكس',
         'تأتي مجهزة بشاشات عرض ذكية متكاملة ومنافذ اتصال متعددة'
       ],
-      image: 'Group 12.jpg', // تم ربط صورة One
+      image: 'Group 12.jpg',
       techTable: {
         columns: ['الموديل الفني الأساسي', 'SL 25.6 200', 'SL 51.2 200', 'SL 25.6 300', 'SL 51.2 300'],
         rows: [
@@ -95,7 +96,7 @@ export default function ProductsSection() {
         'مراقبة فورية ودقيقة لحالة الشحن والتفريغ SOC عبر الواجهة السلسة',
         'عمر افتراضي طويل يتجاوز 10 سنوات استخدام فعلي'
       ],
-      image: 'Group 13.jpg', // تم ربط صورة Line
+      image: 'Group 13.jpg',
       techTable: {
         columns: ['الموديل المعتمد للسلسلة', 'SL 25.6 200', 'SL 25.6 300', 'SL 51.2 200', 'SL 51.2 300'],
         rows: [
@@ -120,7 +121,7 @@ export default function ProductsSection() {
         'استجابة ديناميكية ممتازة للأحمال الحثية والمفاجئة في المنازل والمصانع',
         'اتصال برمجى فوري وسلس مع عواكس الطاقة الذكية'
       ],
-      image: 'Group 15.jpg', // تم ربط صورة Rio
+      image: 'Group 15.jpg',
       techTable: {
         columns: ['طراز حزمة Rio', 'SL 25.6 200', 'SL 25.6 300', 'SL 51.2 200', 'SL 51.2 300'],
         rows: [
@@ -144,7 +145,7 @@ export default function ProductsSection() {
         'دعم متقدم جداً لتقنيات الشحن والتفريغ السريع الآمن المستقر',
         'حماية إلكترونية رباعية متعددة المستويات لتأمين أجهزة المنشأة'
       ],
-      image: 'Group 16.jpg', // تم ربط صورة FlyCell
+      image: 'Group 16.jpg',
       techTable: {
         columns: ['رقم الموديل والتوصيف', 'SL 25.6 200', 'SL 25.6 300', 'SL 51.2 200', 'SL 51.2 300'],
         rows: [
@@ -167,7 +168,7 @@ export default function ProductsSection() {
         'تصميم فائق النحافة تكنولوجي وجذاب (Ultra-thin) مخصص للتعليق الفاخر',
         'عمر افتراضي غير مسبوق يصل إلى 10000 دورة شحن مع ضمان مصنعي 10 سنوات'
       ],
-      image: 'Group 14.jpg', // تم ربط صورة Blade
+      image: 'Group 14.jpg',
       isComingSoon: true,
       techTable: {
         columns: ['المواصفات الفنية المتوقعة', 'Blade 7.4KWh', 'Blade 14.3KWh', 'Blade 21KWh'],
@@ -193,7 +194,7 @@ export default function ProductsSection() {
         'شاحن شمسي مدمج عالي الكفاءة ومجال تشغيل واسع جداً يصل حتى 500VDC',
         'يحتوي نظام حماية وفلترة متكامل ضد الغبار مخصص للأجواء التشغيلية الصعبة'
       ],
-      image: 'Group 7.jpg', // تم ربط صورة Syria Eco
+      image: 'Group 7.jpg',
       techTable: {
         columns: ['المواصفة الفنية للعاكس الشمسي', 'ECO-II-4.2KW PLUS', 'ECO-II-6.2KW PLUS'],
         rows: [
@@ -210,7 +211,7 @@ export default function ProductsSection() {
           ['كفاءة التحويل القصوى (DC to AC)', '94% في وضع البطارية / 98% وضع ربط الشبكة', '94% في وضع البطارية / 98% وضع ربط الشبكة'],
           ['أبعاد الجهاز الهندسية الارتفاع*العرض*العمق', '423x344x113 mm', '423x344x113 mm'],
           ['بروتوكول اتصالات الليثيوم والتطبيقات', 'توصيل مدمج مخصص لـ RS232 / RS485 / WIFI / GPRS / BMS مع عرض كامل للحالة', 'توصيل مدمج مخصص لـ RS232 / RS485 / WIFI / GPRS / BMS مع عرض كامل للحالة'],
-          ['ميزات إضافية حصرية بالسلسلة', 'موجة جيبية نقية، تشغيل بدون بطارية، تفعيل إلكتروني تلقائي لبطاريات الليثيوم الميتة، إضاءة RGB مدمجة تفاعلية تظهر الحالة الحية للتحميل الشمسي والكهربائي والبطارية مباشرة.', 'موجة جيبية نقية، تشغيل بدون بطارية، تفعيل إلكتروني تلقائي لبطاريات الليثيوم الميتة، إضاءة RGB مدمجة تفاعلية تظهر الحالة الحية للتحميل الشمسي والكهربائي والبطارية مباشرة.']
+          ['ميزات إضافية حصرية بالسلسلة', 'موجة جيبية نقية، تشغيل بدون بطارية، تفعيل إلكتروني تلقائي لبطاريات الليثيهم الميتة، إضاءة RGB مدمجة تفاعلية تظهر الحالة الحية للتحميل الشمسي والكهربائي والبطارية مباشرة.', 'موجة جيبية نقية، تشغيل بدون بطارية، تفعيل إلكتروني تلقائي لبطاريات الليثيوم الميتة، إضاءة RGB مدمجة تفاعلية تظهر الحالة الحية للتحميل الشمسي والكهربائي والبطارية مباشرة.']
         ]
       }
     },
@@ -225,7 +226,7 @@ export default function ProductsSection() {
         'منظم شحن شمسي مزدوج (Dual PV Input) مدمج لتوصيل مصفوفتين منفصلتين',
         'ميزة المخرج الثنائي للحمل الذكي (Dual Output) لفرز وتنظيم الأحمال الضرورية'
       ],
-      image: 'Group 9.jpg', // تم ربط صورة Syria Max
+      image: 'Group 9.jpg',
       techTable: {
         columns: ['المواصفة الفنية الشاملة لعاكس الفئة العليا', 'VICTOR MAX-8.2KW', 'VICTOR MAX-10.2KW'],
         rows: [
@@ -246,33 +247,11 @@ export default function ProductsSection() {
           ['تقنيات التحكم والمراقبة والتفاعل الفاخر', 'أزرار تحكم تعمل باللمس بالكامل، تطبيق جوال ذكي متوافق مع نظامي iOS و Android، تشغيل برمجى متطور بدون بطارية، فلتر مدمج مانع للأتربة القاسية، إضاءة RGB متحركة فريدة لبيان الحالة الفورية وتحليلات الأحمال بدقة عالية.', 'أزرار تحكم تعمل باللمس بالكامل، تطبيق جوال ذكي متوافق مع نظامي iOS و Android، تشغيل برمجى متطور بدون بطارية، فلتر مدمج مانع للأتربة القاسية، إضاءة RGB متحركة فريدة لبيان الحالة الفورية وتحليلات الأحمال بدقة عالية.']
         ]
       }
-    },
-    // 9. الألواح الشمسية (أبقيتها كما هي لعدم توفر صورة مخصصة لها في المرفقات)
-    // {
-    //   id: 'solar-panels',
-    //   category: 'solar',
-    //   title: 'ألواح سوروتك الشمسية المتقدمة',
-    //   models: 'تقنية الخلايا أحادية البلورة المتطورة Mono-PERC',
-    //   specs: [
-    //     'خلايا شمسية نقية تضمن أعلى معدلات إنتاجية وتوليد في الأمتار المربعة المحدودة',
-    //     'أداء مستقر ومثالي ومقاومة تامة للتوليد في ظروف الغيوم والإضاءة المنخفضة والأجواء الحارة',
-    //     'إطار هندسي متين مصنع من ألومنيوم معزز ومقاوم لأقوى الرياح والأحمال الميكانيكية والثلجية'
-    //   ],
-    //   image: 'solar.png',
-    //   techTable: {
-    //     columns: ['الخاصية الفنية للهيكل والتوليد', 'مواصفات الألواح المعتمدة'],
-    //     rows: [
-    //       ['نوع تقنية الخلايا الداخلية المعتمدة', 'Mono-PERC أحادية البلورة فائقة النقاء وعالية الكفاءة والإنتاج الكلي'],
-    //       ['كفاءة الخلايا الضوئية (Module Efficiency)', 'تصل حتى 21.5% لضمان أعلى توليد مستدام من شمس الشتاء والصيف المباشرة'],
-    //       ['هيكل المقاومة الخارجي للوحة التوليد', 'ألومنيوم مقسى مع زجاج حماية مقوى ومقاوم للصدمات الميكانيكية المباشرة'],
-    //       ['معامل الأداء الحراري المقاوم للحر السوري', 'معامل تدهور منخفض جداً يحافظ على القدرة التوليدية للعاكس دون هبوط حاد'],
-    //       ['صندوق التوصيل والأسلاك الخلفية وحماية القصر', 'صندوق معزول كلياً IP68 مجهز بصمامات ثنائية (Bypass Diodes) لمنع نقاط السخونة']
-    //     ]
-    //   }
-    // }
+    }
   ];
 
-  const filteredProducts = activeTab === 'all' ? products : products.filter(p => p.category === activeTab);
+  // تم تعديل منطق الفلترة ليعتمد على الأقسام الفردية فقط
+  const filteredProducts = products.filter(p => p.category === activeTab);
 
   return (
     <section id="products" className="py-24 bg-zinc-50 overflow-hidden text-right" dir="rtl">
@@ -290,32 +269,37 @@ export default function ProductsSection() {
 
         <div className="flex flex-wrap justify-center gap-3 mb-16">
           {[
-            { id: 'all', label: 'الكل', icon: Layers },
+            // تم حذف خيار "الكل" من هنا، وبقي قسم الألواح الشمسية معلقاً وموجوداً في القائمة
             { id: 'battery', label: 'بطاريات الليثيوم', icon: Cpu },
-            { id: 'inverter', label: 'الإنفرترات الهجينة', icon: Zap },
-            { id: 'solar', label: 'الألواح الشمسية', icon: Sun }
-          ].map((tab) => {
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`relative px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 transition-colors duration-300 ${
-                  activeTab === tab.id ? 'text-white' : 'text-zinc-600 hover:text-zinc-950 bg-white border border-zinc-200 shadow-sm'
-                }`}
-              >
-                {activeTab === tab.id && (
-                  <motion.div
-                    layoutId="activeTabIndicator"
-                    className="absolute inset-0 bg-red-600 rounded-xl -z-10"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-                <Icon className="w-4 h-4" />
-                {tab.label}
-              </button>
-            );
-          })}
+  { id: 'inverter', label: 'الإنفرترات الهجينة', icon: Zap },
+  { id: 'solar', label: 'الألواح الشمسية', icon: Sun }
+].map((tab) => {
+  const Icon = tab.icon;
+  const isActive = activeTab === tab.id; // التحقق من حالة الضغط
+
+  return (
+    <button
+      key={tab.id}
+      onClick={() => setActiveTab(tab.id as any)}
+      className={`relative px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 transition-colors duration-300 ${
+        isActive 
+          ? 'text-white' // لون النص عند الضغط (نشط)
+          : 'text-zinc-600 hover:text-zinc-950 bg-white border border-zinc-200 shadow-sm' // لون الزر العادي
+      }`}
+    >
+      {isActive && (
+        <motion.div
+          layoutId="activeTabIndicator"
+          className="absolute inset-0 bg-red-600 rounded-xl -z-10" // لون الخلفية الحمراء عند الضغط
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        />
+      )}
+      {/* تأكد من أن الأيقونة ترث اللون أو تتأثر بالنشاط */}
+      <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-white' : 'text-zinc-500'}`} />
+      {tab.label}
+    </button>
+  );
+})}
         </div>
 
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

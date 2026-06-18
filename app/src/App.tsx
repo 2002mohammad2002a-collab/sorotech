@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Navigation from './sections/Navigation';
 import HeroSection from './sections/HeroSection';
 import SolarCalculator from './sections/SolarCalculator';
-import ProductsSection from './sections/ProductsSection'; // 1️⃣ أضفنا سطر الاستيراد هنا
+import ProductsSection from './sections/ProductsSection'; 
 import WhyChooseUsSection from './sections/WhyChooseUsSection';
 import ContactSection from './sections/ContactSection';
 import Footer from './sections/Footer';
@@ -66,7 +66,7 @@ function SolarFastCalculator() {
   return (
     <div className="space-y-6 bg-slate-900/95 p-6 md:p-8 rounded-2xl border border-red-600/30 max-w-4xl mx-auto shadow-2xl text-right my-2" dir="rtl">
       <div className="border-b border-slate-800 pb-3 text-center">
-        <h2 className="text-lg font-black text-white">🧮 حاسبة الأحمال السريعة بالأمبير (نهاري / ليلي)</h2>
+        <h2 className="text-lg font-black text-white"> حاسبة الأحمال السريعة بالأمبير (نهاري / ليلي)</h2>
         <p className="text-xs text-slate-400 mt-1">أدخل الأمبير المطلوب تشغيله مباشرة للحصول على المواصفات الهندسية الفورية</p>
       </div>
 
@@ -146,7 +146,7 @@ function SolarFastCalculator() {
 }
 
 // ==========================================
-// 🚀 المكون الرئيسي المرتب عمودياً مع ميزة التوجيه التلقائي
+// 🚀 المكون الرئيسي المرتب أفقياً وعمودياً مع ميزة التوجيه التلقائي
 // ==========================================
 export default function App() {
   const [showFastCalc, setShowFastCalc] = useState(false);
@@ -183,60 +183,64 @@ export default function App() {
         {/* الواجهة الرئيسية الترحيبية */}
         <HeroSection />
 
-        <div className="max-w-4xl mx-auto py-10 px-4 space-y-8">
+        <div className="max-w-6xl mx-auto py-12 px-4 space-y-12">
           
-          {/* 1️⃣ القسم الأول: الحاسبة السريعة بالأمبير */}
-          <div id="fast-calc" className="bg-slate-900/10 p-6 rounded-2xl border border-slate-900/60 shadow-md scroll-mt-20">
-            <div className="text-center mb-4">
-              <h2 className="text-lg font-black text-red-500">⚡ حاسبة الأحمال السريعة بالأمبير</h2>
-              <p className="text-xs text-slate-400 mt-1">اضغط بالأسفل لفتح حساب فوري للمنظومة بناءً على أمبير التشغيل المباشر</p>
-            </div>
+          {/* حاوية الحاسبتين المتجاوبة: أفقية في الكمبيوتر وعمودية في الجوال */}
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch">
             
-            <div className="max-w-md mx-auto mb-4">
-              <button
-                onClick={() => setShowFastCalc(!showFastCalc)}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all transform active:scale-95 flex items-center justify-center gap-2 text-xs md:text-sm"
-              >
-                <span>{showFastCalc ? '❌ إغلاق حاسبة الأمبير السريعة' : '🔌 فتح حاسبة الأمبير السريعة'}</span>
-              </button>
+            {/* 1️⃣ القسم الأول: الحاسبة السريعة بالأمبير */}
+            <div id="fast-calc" className="flex-1 bg-slate-900/20 p-6 rounded-2xl border border-slate-900/80 shadow-md scroll-mt-20 flex flex-col justify-between">
+              <div className="text-center mb-6">
+                <h2 className="text-lg font-black text-red-500">⚡ حاسبة الأحمال السريعة بالأمبير</h2>
+                <p className="text-xs text-slate-400 mt-2">احسب منظومتك فوراً بناءً على أمبير التشغيل المباشر</p>
+              </div>
+              
+              <div className="w-full mt-auto">
+                <button
+                  onClick={() => setShowFastCalc(!showFastCalc)}
+                  className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all transform active:scale-95 flex items-center justify-center gap-2 text-xs md:text-sm"
+                >
+                  <span>{showFastCalc ? '❌ إغلاق حاسبة الأمبير' : '🔌 فتح حاسبة الأمبير السريعة'}</span>
+                </button>
+              </div>
             </div>
 
-            {showFastCalc && (
-              <div className="animate-fadeIn mt-6">
-                <SolarFastCalculator />
+            {/* 2️⃣ القسم الثاني: الحاسبة التفصيلية بالأجهزة */}
+            <div id="detailed-calc" className="flex-1 bg-slate-900/20 p-6 rounded-2xl border border-slate-900/80 shadow-md scroll-mt-20 flex flex-col justify-between">
+              <div className="text-center mb-6">
+                <h2 className="text-lg font-black text-white">⚡ حاسبة الأجهزة المنزلية التفصيلية</h2>
+                <p className="text-xs text-slate-400 mt-2">حدد الأجهزة الكهربائية واختبر محتويات منزلك بالتفصيل</p>
               </div>
-            )}
+
+              <div className="w-full mt-auto">
+                <button
+                  onClick={() => setShowDetailedCalc(!showDetailedCalc)}
+                  className="w-full bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all transform active:scale-95 border border-slate-700 flex items-center justify-center gap-2 text-xs md:text-sm"
+                >
+                  <span>{showDetailedCalc ? '❌ إغلاق حاسبة الأجهزة' : '📋 فتح حاسبة الأجهزة التفصيلية'}</span>
+                </button>
+              </div>
+            </div>
+
           </div>
 
-          {/* 🔗 خط فاصل هندسي */}
-          <hr className="border-slate-900 max-w-xl mx-auto" />
-
-          {/* 2️⃣ القسم الثاني: الحاسبة التفصيلية بالأجهزة */}
-          <div id="detailed-calc" className="bg-slate-900/10 p-6 rounded-2xl border border-slate-900/60 shadow-md scroll-mt-20">
-            <div className="text-center mb-4">
-              <h2 className="text-lg font-black text-white">⚡ حاسبة الأجهزة المنزلية التفصيلية</h2>
-              <p className="text-xs text-slate-400 mt-1">اضغط بالأسفل لفتح جدول الأجهزة الكهربائية واختيار محتويات منزلك بالتفصيل</p>
+          {/* عرض الحاسبة السريعة ممتدة بكامل العرض عند فتحها */}
+          {showFastCalc && (
+            <div className="animate-fadeIn w-full">
+              <SolarFastCalculator />
             </div>
+          )}
 
-            <div className="max-w-md mx-auto mb-4">
-              <button
-                onClick={() => setShowDetailedCalc(!showDetailedCalc)}
-                className="w-full bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-700 hover:to-slate-800 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all transform active:scale-95 border border-slate-700 flex items-center justify-center gap-2 text-xs md:text-sm"
-              >
-                <span>{showDetailedCalc ? '❌ إغلاق حاسبة الأجهزة التفصيلية' : '📋 فتح حاسبة الأجهزة التفصيلية (جدول الأجهزة)'}</span>
-              </button>
+          {/* عرض الحاسبة التفصيلية ممتدة بكامل العرض عند فتحها */}
+          {showDetailedCalc && (
+            <div className="animate-fadeIn w-full">
+              <SolarCalculator />
             </div>
-
-            {showDetailedCalc && (
-              <div className="animate-fadeIn mt-6">
-                <SolarCalculator />
-              </div>
-            )}
-          </div>
+          )}
 
         </div>
 
-        {/* 2️⃣ هنا قمنا بإعادة قسم المنتجات المحذوف ليظهر بشكل صحيح وثابت */}
+        {/* قسم المنتجات الثابت */}
         <ProductsSection />
 
         {/* بقية أقسام الصفحة الثابتة بالأسفل */}
