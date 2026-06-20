@@ -19,7 +19,6 @@ interface Product {
 }
 
 export default function ProductsSection() {
-  // تم تغيير القيمة الابتدائية إلى 'battery' وإزالة خيار 'all'
   const [activeTab, setActiveTab] = useState<'battery' | 'inverter' | 'solar'>('battery');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
@@ -130,7 +129,7 @@ export default function ProductsSection() {
           ['تيار الشحن والتفريغ الأقصى المتواصل', '150 A', '150 A', '150 A', '150 A'],
           ['العمر الافتراضي للدورات الحية', '>6000 Cycles @100% DOD', '>6000 Cycles @100% DOD', '>6000 Cycles @100% DOD', '>6000 Cycles @100% DOD'],
           ['نظام موازنة الخلايا النشط المدمج', 'JK Active Balance BMS', 'JK Active Balance BMS', 'JK Active Balance BMS', 'JK Active Balance BMS'],
-          ['درجة الرطوبة والتشغيل الآمن', '0-80% (بدون تكاثف) / حرارة شحن من 0 حتى 45 درجة مئوية', '0-80% (بدون تكاثف) / حرارة شحن من 0 حتى 45 درجة مئوية', '0-80% (بدون تكاثف) / حرارة شحن من 0 حتى 45 درجة مئوية', '0-80% (بدون تكاثف) / حرارة شحن من 0 حتى 45 درجة مئوية']
+          ['درجة الرطوبة والتشغيل الآمن', '0-80% (بدون تكاثف) / حرارة شحن من 0 حتى 45 درجة مئوية', '0-80% (بدون تكاثف) / حرارة شحن من 0 حتى 45 درجة مئوية', '0-80% (بدون تكاثف) / حرارة شحن من 0 until 45 درجة مئوية', '0-80% (بدون تكاثف) / حرارة شحن من 0 حتى 45 درجة مئوية']
         ]
       }
     },
@@ -250,7 +249,6 @@ export default function ProductsSection() {
     }
   ];
 
-  // تم تعديل منطق الفلترة ليعتمد على الأقسام الفردية فقط
   const filteredProducts = products.filter(p => p.category === activeTab);
 
   return (
@@ -267,39 +265,38 @@ export default function ProductsSection() {
           <h2 className="text-4xl font-black text-zinc-950">منتجاتنا المعتمدة ومواصفاتها الفنية</h2>
         </motion.div>
 
+        {/* أزرار التصفية المعدلة */}
         <div className="flex flex-wrap justify-center gap-3 mb-16">
           {[
-            // تم حذف خيار "الكل" من هنا، وبقي قسم الألواح الشمسية معلقاً وموجوداً في القائمة
             { id: 'battery', label: 'بطاريات الليثيوم', icon: Cpu },
-  { id: 'inverter', label: 'الإنفرترات الهجينة', icon: Zap },
-  { id: 'solar', label: 'الألواح الشمسية', icon: Sun }
-].map((tab) => {
-  const Icon = tab.icon;
-  const isActive = activeTab === tab.id; // التحقق من حالة الضغط
-
-  return (
-    <button
-      key={tab.id}
-      onClick={() => setActiveTab(tab.id as any)}
-      className={`relative px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 transition-colors duration-300 ${
-        isActive 
-          ? 'text-white' // لون النص عند الضغط (نشط)
-          : 'text-zinc-600 hover:text-zinc-950 bg-white border border-zinc-200 shadow-sm' // لون الزر العادي
-      }`}
-    >
-      {isActive && (
-        <motion.div
-          layoutId="activeTabIndicator"
-          className="absolute inset-0 bg-red-600 rounded-xl -z-10" // لون الخلفية الحمراء عند الضغط
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        />
-      )}
-      {/* تأكد من أن الأيقونة ترث اللون أو تتأثر بالنشاط */}
-      <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-white' : 'text-zinc-500'}`} />
-      {tab.label}
-    </button>
-  );
-})}
+            { id: 'inverter', label: 'الإنفرترات الهجينة', icon: Zap },
+            { id: 'solar', label: 'الألواح الشمسية', icon: Sun }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`relative px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 transition-colors duration-300 ${
+                  isActive 
+                    ? 'text-white' 
+                    : 'text-zinc-600 hover:text-zinc-950 bg-white border border-zinc-200 shadow-sm'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTabIndicator"
+                    className="absolute inset-0 bg-red-600 rounded-xl -z-10"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-white' : 'text-zinc-500'}`} />
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
         <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
