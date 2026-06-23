@@ -22,3 +22,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+# Local environmental variables (هام جداً لحماية مفاتيح الـ API وبيانات الاتصال)
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Vite build cache & logs
+.vite
+.eslintcache
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
